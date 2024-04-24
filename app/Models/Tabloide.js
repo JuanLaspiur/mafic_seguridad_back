@@ -14,6 +14,7 @@ class Tabloide extends Model {
   img: string
   link de redireccionamiento: string
   seccion: ?
+  nro_posicion:
 
   >front>
   debe aparecer en home y en las terceras columnas

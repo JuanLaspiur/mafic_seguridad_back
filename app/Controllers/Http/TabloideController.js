@@ -52,12 +52,30 @@ const Helpers = use('Helpers')
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, auth }) {
+/* async store ({ request, response, auth }) {
     let dat = request._body
     dat.status = 0
     const tabloide = await Tabloide.create(dat)
     response.send(tabloide)
-  }
+  }*/
+   async store ({ request, response, auth }) {
+    try {
+      let dat = request._body
+      dat.status = 0
+  
+      // Verificar si el usuario proporcionó una posición válida
+      if (dat.nro_posicion !== '1' && dat.nro_posicion !== '2') {
+        return response.status(400).send({ message: "La posición debe ser '1' o '2' tipo String" });
+      }
+  
+      const tabloide = await Tabloide.create(dat)
+      return response.send(tabloide)
+    } catch (error) {
+      console.error('Error al crear el tabloide: ' + error.message);
+      return response.status(500).send({ message: "Error al crear el tabloide." });
+    }
+  }  
+  
 
   /**
    * Display a single Quedada.
